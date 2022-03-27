@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html >
+<!-- Titre et fichier/police CSS -->
+<head>
+  <meta charset="UTF-8">
+  <title>Application Web de Machine Learning</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.ch.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+
+<!-- 'styleSelect' est pour le menu de sélection, 'button' est pour le centrage et la taille du bouton, 'pre-wrap' change les \n en line break, et 'textearea' pour le thème de la textbox -->
+<style> 
+
+.fa{
+    padding-right: 10px!important;
+}
+
+div.a {
+  line-height: 0.2;
+}
+
+div.b {
+  font-size: 15px;
+  line-height: 2.8;
+}
+
+select {
+    margin: auto; 
+    width: 100px;
+    height: 34px;
+}
+
+button[type=submit] { 
+height: 50px; 
+width: 100px; 
+margin: auto; 
+} 
+
+.pre-wrap {
+  white-space: pre-wrap; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; 
+}
+
+textarea {
+ background-color: rgba(0,0,0,0.3);
+ border: none;
+}
+
+</style>
+
+<!-- icones font awesome pour les coordonnées-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<!-- Corps de la page -->
+<body>
+
+<!-- coordonnées -->
+  
+
+<a href=" https://github.com/MohamedBouzidGit/" target="_blank" class="github"><i class="fa fa-github" style="font-size:40px;color:lightgrey"></i></a>
+        <a href="mailto:mohamed.bouzid@tutamail.com" target="_blank" class="email"><i class="fa fa-envelope-o" style="font-size:40px;color:lightgrey"></i></a>
+        <a href="https://www.linkedin.com/in/mohamed-bouzid-80201229/" target="_blank" class="linkedin"><i class="fa fa-linkedin" style="font-size:40px;color:lightgrey"></i></a>
+
+
+<br>
+
+ <div class="a">
+ 
+	<h2>Classification d'email par thème</h2>
+	</div>
+	<div class="b">Sélectionner le numéro d'email souhaité</div>
+
+     <!-- Input pour recevoir la requête à destination du modèle (via POST) -->
+    <form action="{{ url_for('estimation')}}"method="post">
+        <select class="decorated" name="menu" method="GET" action="/">
+        <option disabled>N° email</option>
+        {% for i in menu %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+
+   <br>
+   <br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Estimation</button>
+   <br>
+   <br>
+               <!-- affichage de l'email original : renvoie au CSS pre-wrap permettant de transformer les \n en line break -->   
+                   <textarea rows="10" cols="70" readonly class="pre-wrap" placeholder="Choisir un numéro d'email et cliquer sur le bouton 'Estimation' pour en révéler le contenu et lancer la classification. 
+                   
+L'algorithme doit ainsi estimer à quel thème appartient l'email soumis qu'il n'a jamais vu auparavant. Sa précision est de 76%. 
+
+Les thèmes sont : 
+- Sujets internes
+- Sujets externes
+- Domaine légal">{{ raw_email }}</textarea> <!-- text box non éditable --> 
+    </form>
+    
+    
+   <!-- br = saut de ligne -->
+   <br>
+   <br>
+   <!-- affichage de l'estimation -->   
+   <b>{{ estimated_class }}</b>
+   <!-- p = saut de ligne -->
+   <br>
+   <br>
+   <!-- affichage de la classe réelle -->   
+   {{ real_class }}
+
+  </div>
+      
+</body>
+
+</html>
